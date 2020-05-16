@@ -1,0 +1,28 @@
+server:
+  port: ${PORT:8084} # Indicate the default PORT where this service will be started
+ 
+eureka:         #tells about the Eureka server details and its refresh time
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    lease:
+      duration: 5
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+zuul:
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  routes:
+    database-service:
+      service-id: database-service
+      path: /database-service/**
+      strip-prefix: false
+    operation-service:
+      service-id: operation-service
+      path: /operation-service/**
+      strip-prefix: false
